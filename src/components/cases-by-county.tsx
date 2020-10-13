@@ -8,11 +8,11 @@ type Props = {
   data: string;
 };
 
-const CasesByDay: FunctionComponent<Props> = ({ county, data }) => {
+const CasesByCounty: FunctionComponent<Props> = ({ county, data }) => {
   if (data === null) {
     return <h1>{`Fetching for ${county} county`}</h1>;
   }
   return <Line data={lineDataForCounty(data, county)} />;
 };
 
-export default CasesByDay;
+export default CasesByCounty;

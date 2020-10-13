@@ -66,3 +66,33 @@ export const lineDataForCounty = (data: string, county: string) => {
   }
   return d;
 };
+
+export const lineDataForStates = (data: string, state: string) => {
+  const rows = data.split("\n");
+  let lastTotalDeaths: number = 0;
+  let d = {
+    labels: [] as string[],
+    datasets: [
+      {
+        label: `Deaths By Day in ${state}`,
+        data: [] as number[],
+        backgroundColor: [] as string[],
+        borderColor: [] as string[],
+        borderWidth: 1,
+      },
+    ],
+  };
+  for (let i = 1; i <= rows.length - 1; i++) {
+    const currentRow = rows[i].split(",");
+    if (currentRow[1] === state) {
+      const currentTotalDeaths = parseInt(currentRow[4]);
+      const newDeaths = currentTotalDeaths - lastTotalDeaths;
+      d.labels.push(currentRow[0]);
+      d.datasets[0].data.push(newDeaths);
+      d.datasets[0].borderColor.push("rgba(255, 99, 132, 1)");
+      d.datasets[0].backgroundColor.push("rgba(255, 99, 132, 0.2)");
+      lastTotalDeaths = currentTotalDeaths;
+    }
+  }
+  return d;
+};
