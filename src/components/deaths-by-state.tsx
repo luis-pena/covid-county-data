@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import { Line } from "react-chartjs-2";
 
-import { lineDataForStates } from "lib/helpers";
+import { lineDataForState } from "lib/helpers";
 
 type Props = {
   state: string;
@@ -10,7 +10,7 @@ type Props = {
 const DeathsByState: FunctionComponent<Props> = ({ state, data }) => {
   if (data === null) return null;
 
-  return <Line data={lineDataForStates(data, state)} />;
+  return <Line data={lineDataForState(data, state)} />;
 };
 
 export default DeathsByState;

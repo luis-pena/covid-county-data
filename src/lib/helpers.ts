@@ -44,7 +44,7 @@ export const lineDataForCounty = (data: string, county: string) => {
     labels: [] as string[],
     datasets: [
       {
-        label: `New Covid Cases By Day in ${county} County`,
+        label: `${county} County`,
         data: [] as number[],
         backgroundColor: [] as string[],
         borderColor: [] as string[],
@@ -60,14 +60,14 @@ export const lineDataForCounty = (data: string, county: string) => {
       d.labels.push(currentRow[0]);
       d.datasets[0].data.push(newCases);
       d.datasets[0].borderColor.push(borderColor(newCases));
-      d.datasets[0].backgroundColor.push(bgColor(newCases));
+      d.datasets[0].backgroundColor.push("rgba(54, 162, 235, 0.2)");
       lastTotalCases = currentTotalCases;
     }
   }
   return d;
 };
 
-export const lineDataForStates = (data: string, state: string) => {
+export const lineDataForState = (data: string, state: string) => {
   const rows = data.split("\n");
   let lastTotalDeaths: number = 0;
   let d = {

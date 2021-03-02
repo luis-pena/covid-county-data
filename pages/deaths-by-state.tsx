@@ -1,43 +1,43 @@
 import React, { useEffect, useState } from "react";
 
 import LoadingIndicator from "components/loading-indicator";
-import CasesByCounty from "components/cases-by-county";
+import DeathsByState from "components/deaths-by-state";
 
-const Home = () => {
-  const [countyCasesByDay, setCountyCasesByDay] = useState("");
+const ByState = () => {
+  const [stateDeathsByDay, setStateDeathsByDay] = useState("");
   const [
-    hasFectchedCountyCasesByDay,
-    setHasFectchedCountyCasesByDay,
+    hasFectchedStateDeathsByDay,
+    setHasFectchedStateDeathsByDay,
   ] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
-    if (countyCasesByDay) {
+    if (stateDeathsByDay) {
       setIsFetching(false);
     }
-  }, [countyCasesByDay]);
+  }, [stateDeathsByDay]);
 
   // TODO make these custom hooks!
   useEffect(() => {
     setIsFetching(true);
-    async function fetchCountyCasesByDay() {
-      if (!hasFectchedCountyCasesByDay) {
+    async function fetchStateDeathsByDay() {
+      if (!hasFectchedStateDeathsByDay) {
         try {
           await fetch(
-            "https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv"
+            "https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv"
           )
             .then((response) => response.text())
             .then((data) => {
-              setCountyCasesByDay(data);
+              setStateDeathsByDay(data);
             });
         } catch (e) {
           console.log("ERROR", e);
         } finally {
-          setHasFectchedCountyCasesByDay(true);
+          setHasFectchedStateDeathsByDay(true);
         }
       }
     }
-    fetchCountyCasesByDay();
+    fetchStateDeathsByDay();
   }, []);
 
   if (isFetching) {
@@ -46,7 +46,7 @@ const Home = () => {
   return (
     <>
       <div className="chart">
-        <CasesByCounty county="Los Angeles" data={countyCasesByDay} />
+        <DeathsByState state="California" data={stateDeathsByDay} />
       </div>
       <p className="attribution">
         source:{" "}
@@ -73,4 +73,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default ByState;
