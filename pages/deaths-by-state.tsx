@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import Attribution from "components/attribution";
 import LoadingIndicator from "components/loading-indicator";
 import DeathsByState from "components/deaths-by-state";
 import NavigationMenu from "components/navigation-menu";
@@ -50,25 +51,10 @@ const ByState = () => {
       <div className="chart">
         <DeathsByState state="California" data={stateDeathsByDay} />
       </div>
-      <p className="attribution">
-        source:{" "}
-        <a href="https://github.com/nytimes/covid-19-data" target="_blank">
-          https://github.com/nytimes/covid-19-data
-        </a>
-      </p>
+      <Attribution />
       <style jsx>{`
         .chart {
           padding-bottom: 5rem;
-        }
-        .attribution {
-          text-align: center;
-          color: "#67568c";
-          font-weight: bold;
-          font-family: Arial;
-          margin-bottom: 10rem;
-        }
-        .attribution a {
-          color: "#ff6e6c";
         }
       `}</style>
     </>

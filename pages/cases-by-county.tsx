@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import Attribution from "components/attribution";
 import LoadingIndicator from "components/loading-indicator";
 import CasesByCounty from "components/cases-by-county";
 import NavigationMenu from "components/navigation-menu";
@@ -56,19 +57,10 @@ const Home = () => {
           https://github.com/nytimes/covid-19-data
         </a>
       </p>
+      <Attribution />
       <style jsx>{`
         .chart {
           padding-bottom: 5rem;
-        }
-        .attribution {
-          text-align: center;
-          color: rgba(54, 162, 235, 1);
-          font-weight: bold;
-          font-family: Arial;
-          margin-bottom: 10rem;
-        }
-        .attribution a {
-          color: rgba(153, 102, 255, 1);
         }
       `}</style>
     </>
