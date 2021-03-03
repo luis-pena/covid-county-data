@@ -51,12 +51,6 @@ const Home = () => {
       <div className="chart">
         <CasesByCounty county="Los Angeles" data={countyCasesByDay} />
       </div>
-      <p className="attribution">
-        source:{" "}
-        <a href="https://github.com/nytimes/covid-19-data" target="_blank">
-          https://github.com/nytimes/covid-19-data
-        </a>
-      </p>
       <Attribution />
       <style jsx>{`
         .chart {
