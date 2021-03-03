@@ -9,9 +9,7 @@ type Props = {
 };
 
 const CasesByCounty: FunctionComponent<Props> = ({ county, data }) => {
-  if (data === null) {
-    return <h1>{`Fetching for ${county} county`}</h1>;
-  }
+  if (data === null) return null;
 
   return (
     <>
@@ -19,10 +17,17 @@ const CasesByCounty: FunctionComponent<Props> = ({ county, data }) => {
       <Line
         data={lineDataForCounty(data, county)}
         options={{
-          ticks: {
-            beginAtZero: true,
+          tooltips: {
+            mode: "index",
+            intersect: false,
           },
-          animationDuration: 10000,
+          hover: {
+            mode: "index",
+            intersect: false,
+          },
+          chartArea: {
+            backgroundColor: "palegreen",
+          },
         }}
       />
       <style jsx>{`

@@ -62,13 +62,13 @@ const ByState = () => {
         }
         .attribution {
           text-align: center;
-          color: rgba(54, 162, 235, 1);
+          color: "#67568c";
           font-weight: bold;
           font-family: Arial;
           margin-bottom: 10rem;
         }
         .attribution a {
-          color: rgba(153, 102, 255, 1);
+          color: "#ff6e6c";
         }
       `}</style>
     </>
