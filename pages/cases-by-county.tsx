@@ -1,44 +1,44 @@
 import React, { useEffect, useState } from "react";
 
 import LoadingIndicator from "components/loading-indicator";
-import DeathsByState from "components/deaths-by-state";
+import CasesByCounty from "components/cases-by-county";
 import NavigationMenu from "components/navigation-menu";
 
-const ByState = () => {
-  const [stateDeathsByDay, setStateDeathsByDay] = useState("");
+const Home = () => {
+  const [countyCasesByDay, setCountyCasesByDay] = useState("");
   const [
-    hasFectchedStateDeathsByDay,
-    setHasFectchedStateDeathsByDay,
+    hasFectchedCountyCasesByDay,
+    setHasFectchedCountyCasesByDay,
   ] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
-    if (stateDeathsByDay) {
+    if (countyCasesByDay) {
       setIsFetching(false);
     }
-  }, [stateDeathsByDay]);
+  }, [countyCasesByDay]);
 
   // TODO make these custom hooks!
   useEffect(() => {
     setIsFetching(true);
-    async function fetchStateDeathsByDay() {
-      if (!hasFectchedStateDeathsByDay) {
+    async function fetchCountyCasesByDay() {
+      if (!hasFectchedCountyCasesByDay) {
         try {
           await fetch(
-            "https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv"
+            "https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv"
           )
             .then((response) => response.text())
             .then((data) => {
-              setStateDeathsByDay(data);
+              setCountyCasesByDay(data);
             });
         } catch (e) {
           console.log("ERROR", e);
         } finally {
-          setHasFectchedStateDeathsByDay(true);
+          setHasFectchedCountyCasesByDay(true);
         }
       }
     }
-    fetchStateDeathsByDay();
+    fetchCountyCasesByDay();
   }, []);
 
   if (isFetching) {
@@ -48,7 +48,7 @@ const ByState = () => {
     <>
       <NavigationMenu />
       <div className="chart">
-        <DeathsByState state="California" data={stateDeathsByDay} />
+        <CasesByCounty county="Los Angeles" data={countyCasesByDay} />
       </div>
       <p className="attribution">
         source:{" "}
@@ -75,4 +75,4 @@ const ByState = () => {
   );
 };
 
-export default ByState;
+export default Home;

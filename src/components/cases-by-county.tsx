@@ -12,6 +12,7 @@ const CasesByCounty: FunctionComponent<Props> = ({ county, data }) => {
   if (data === null) {
     return <h1>{`Fetching for ${county} county`}</h1>;
   }
+
   return (
     <>
       <h1>New COVID-19 Cases By Day - {county} county</h1>

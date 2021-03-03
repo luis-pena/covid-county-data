@@ -86,11 +86,14 @@ export const lineDataForState = (data: string, state: string) => {
     const currentRow = rows[i].split(",");
     if (currentRow[1] === state) {
       const currentTotalDeaths = parseInt(currentRow[4]);
+
       const newDeaths = currentTotalDeaths - lastTotalDeaths;
       d.labels.push(currentRow[0]);
-      d.datasets[0].data.push(newDeaths);
-      d.datasets[0].borderColor.push("rgba(255, 99, 132, 1)");
-      d.datasets[0].backgroundColor.push("rgba(255, 99, 132, 0.2)");
+
+      d.datasets[0].data.push(newDeaths >= 0 ? newDeaths : 0);
+      d.datasets[0].borderColor.push("rgba(255, 110, 108, 1)");
+      d.datasets[0].backgroundColor.push("rgba(255, 110, 108, .2)");
+
       lastTotalDeaths = currentTotalDeaths;
     }
   }
