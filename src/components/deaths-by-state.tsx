@@ -17,7 +17,6 @@ const DeathsByState: FunctionComponent<Props> = ({ state, data }) => {
           hover: {
             mode: "index",
             intersect: false,
-            lineCap: "butt",
           },
         }}
       />
