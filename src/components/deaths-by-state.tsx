@@ -8,21 +8,16 @@ type Props = {
   data: string;
 };
 const DeathsByState: FunctionComponent<Props> = ({ state, data }) => {
-  if (data === null) return null;
-
   return (
     <>
       <h1>Daily COVID-19 Deaths - {state}</h1>
       <Line
         data={lineDataForState(data, state)}
         options={{
-          tooltips: {
-            mode: "index",
-            intersect: false,
-          },
           hover: {
             mode: "index",
             intersect: false,
+            lineCap: "butt",
           },
         }}
       />

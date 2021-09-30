@@ -1,27 +1,22 @@
 import React, { useEffect, useState } from "react";
 
 import Attribution from "components/attribution";
-import LoadingIndicator from "components/loading-indicator";
 import DeathsByState from "components/deaths-by-state";
 import NavigationMenu from "components/navigation-menu";
+import SingleColLayout from "components/layout/single-col";
 
 const ByState = () => {
   const [stateDeathsByDay, setStateDeathsByDay] = useState("");
-  const [
-    hasFectchedStateDeathsByDay,
-    setHasFectchedStateDeathsByDay,
-  ] = useState(false);
-  const [isFetching, setIsFetching] = useState(false);
+  const [hasFectchedStateDeathsByDay, setHasFectchedStateDeathsByDay] =
+    useState(false);
 
   useEffect(() => {
     if (stateDeathsByDay) {
-      setIsFetching(false);
     }
   }, [stateDeathsByDay]);
 
   // TODO make these custom hooks!
   useEffect(() => {
-    setIsFetching(true);
     async function fetchStateDeathsByDay() {
       if (!hasFectchedStateDeathsByDay) {
         try {
@@ -42,16 +37,15 @@ const ByState = () => {
     fetchStateDeathsByDay();
   }, []);
 
-  if (isFetching) {
-    return <LoadingIndicator />;
-  }
   return (
     <>
-      <NavigationMenu />
-      <div className="chart">
-        <DeathsByState state="California" data={stateDeathsByDay} />
-      </div>
-      <Attribution />
+      <SingleColLayout>
+        <NavigationMenu />
+        <div className="chart">
+          <DeathsByState state="California" data={stateDeathsByDay} />
+        </div>
+        <Attribution />
+      </SingleColLayout>
       <style jsx>{`
         .chart {
           padding-bottom: 5rem;

@@ -9,24 +9,15 @@ type Props = {
 };
 
 const CasesByCounty: FunctionComponent<Props> = ({ county, data }) => {
-  if (data === null) return null;
-
   return (
     <>
       <h1>New COVID-19 Cases By Day - {county} county</h1>
       <Line
         data={lineDataForCounty(data, county)}
         options={{
-          tooltips: {
-            mode: "index",
-            intersect: false,
-          },
           hover: {
             mode: "index",
             intersect: false,
-          },
-          chartArea: {
-            backgroundColor: "palegreen",
           },
         }}
       />

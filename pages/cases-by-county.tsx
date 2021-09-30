@@ -1,27 +1,22 @@
 import React, { useEffect, useState } from "react";
 
 import Attribution from "components/attribution";
-import LoadingIndicator from "components/loading-indicator";
 import CasesByCounty from "components/cases-by-county";
 import NavigationMenu from "components/navigation-menu";
+import SingleColLayout from "components/layout/single-col";
 
 const Home = () => {
   const [countyCasesByDay, setCountyCasesByDay] = useState("");
-  const [
-    hasFectchedCountyCasesByDay,
-    setHasFectchedCountyCasesByDay,
-  ] = useState(false);
-  const [isFetching, setIsFetching] = useState(false);
+  const [hasFectchedCountyCasesByDay, setHasFectchedCountyCasesByDay] =
+    useState(false);
 
   useEffect(() => {
     if (countyCasesByDay) {
-      setIsFetching(false);
     }
   }, [countyCasesByDay]);
 
   // TODO make these custom hooks!
   useEffect(() => {
-    setIsFetching(true);
     async function fetchCountyCasesByDay() {
       if (!hasFectchedCountyCasesByDay) {
         try {
@@ -42,11 +37,8 @@ const Home = () => {
     fetchCountyCasesByDay();
   }, []);
 
-  if (isFetching) {
-    return <LoadingIndicator />;
-  }
   return (
-    <>
+    <SingleColLayout>
       <NavigationMenu />
       <div className="chart">
         <CasesByCounty county="Los Angeles" data={countyCasesByDay} />
@@ -57,7 +49,7 @@ const Home = () => {
           padding-bottom: 5rem;
         }
       `}</style>
-    </>
+    </SingleColLayout>
   );
 };
 
