@@ -3,29 +3,29 @@ import type { RootState } from "store";
 
 // Define a type for the slice state
 interface ConfigState {
-  county: string;
+  counties: string[];
 }
 
 // Define the initial state using that type
 const initialState: ConfigState = {
-  county: "Los Angeles",
+  counties: ["Los Angeles"],
 };
 
 export const configSlice = createSlice({
   name: "config",
   initialState,
   reducers: {
-    setCounty: (state, action: PayloadAction<string>) => {
-      state.county = action.payload;
+    setCounties: (state, action: PayloadAction<string[]>) => {
+      state.counties = action.payload;
     },
   },
 });
 
 // EXPORT ACTIONS
-export const { setCounty } = configSlice.actions;
+export const { setCounties } = configSlice.actions;
 
 // SELECTORS
-export const selectCounty = (state: RootState) => state.config.county;
+export const selectCounties = (state: RootState) => state.config.counties;
 
 // REDUCER
 export default configSlice.reducer;
