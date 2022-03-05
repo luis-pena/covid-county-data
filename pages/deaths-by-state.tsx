@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 
 import Attribution from "components/attribution";
 import DeathsByState from "components/deaths-by-state";
-import NavigationMenu from "components/navigation-menu";
 import SingleColLayout from "components/layout/single-col";
+import { Paper } from "@mui/material";
 
 const ByState = () => {
   const [stateDeathsByDay, setStateDeathsByDay] = useState("");
@@ -38,20 +38,12 @@ const ByState = () => {
   }, []);
 
   return (
-    <>
-      <SingleColLayout>
-        <NavigationMenu />
-        <div className="chart">
-          <DeathsByState state="California" data={stateDeathsByDay} />
-        </div>
+    <SingleColLayout title="COVID-19 Deaths by State">
+      <Paper sx={{ px: 2, py: 8 }}>
+        <DeathsByState state="California" data={stateDeathsByDay} />
         <Attribution />
-      </SingleColLayout>
-      <style jsx>{`
-        .chart {
-          padding-bottom: 5rem;
-        }
-      `}</style>
-    </>
+      </Paper>
+    </SingleColLayout>
   );
 };
 
