@@ -1,5 +1,11 @@
 import { FunctionComponent, useState } from "react";
-import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
+import {
+  styled,
+  useTheme,
+  Theme,
+  CSSObject,
+  ThemeOptions,
+} from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
@@ -48,7 +54,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
   },
 });
 
-const DrawerHeader = styled("div")(({ theme }: { theme: Theme }) => ({
+const DrawerHeader = styled("div")(({ theme }: { theme: any }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "flex-end",
