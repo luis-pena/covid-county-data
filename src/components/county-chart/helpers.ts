@@ -33,6 +33,10 @@ export const colorMap = (index: number) => {
 };
 
 export const formatTickDate = (date: string) => {
-  const dateConstruct = new Date(date);
-  return dateConstruct.toLocaleDateString();
+  if (date) {
+    const dateConstruct = new Date(date);
+    const formattedDate = dateConstruct.toLocaleDateString();
+    return formattedDate === "Invalid Date" ? "-" : formattedDate;
+  }
+  return "-";
 };

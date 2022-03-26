@@ -12,7 +12,7 @@ import {
 
 import { useAppDispatch, useAppSelector } from "hooks/store";
 import { selectActiveCounties } from "slices/config";
-import SelectedCounties from "components/selected-counties";
+import CountyFilter from "components/county-filter";
 
 const CountyData = () => {
   const theme = useTheme();
@@ -43,8 +43,8 @@ const CountyData = () => {
 
   return (
     <SingleColLayout title="COVID-19 U.S. County Cases and Deaths">
-      <SelectedCounties />
-      <Paper sx={{ px: 2, py: 8, mb: 6 }}>
+      <CountyFilter />
+      <Paper sx={{ px: 2, py: 4, mb: 6 }}>
         <Typography
           variant="h5"
           sx={{ pb: 4, ml: 2 }}

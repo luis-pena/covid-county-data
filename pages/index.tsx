@@ -1,3 +1,3 @@
-import CasesByCounty from "./county-data";
+import CountyData from "./county-data";
 
-export default CasesByCounty;
+export default CountyData;
