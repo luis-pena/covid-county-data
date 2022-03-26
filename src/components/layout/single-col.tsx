@@ -9,14 +9,15 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import {
+  LocationCity as LocationCityIcon,
+  Menu as MenuIcon,
+  ChevronLeft as ChevronLeftIcon,
+  ChevronRight as ChevronRightIcon,
+  Map as MapIcon,
+} from "@mui/icons-material/";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-
-import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
-import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 
 import ListItemButton from "@mui/material/ListItemButton";
 
@@ -142,17 +143,17 @@ const SingleColLayout: FunctionComponent<Props> = ({ children, title }) => {
         </DrawerHeader>
         <Divider />
         <List>
-          <ListItemButton component="a" key="cases" href="/cases-by-county">
+          <ListItemButton component="a" key="cases" href="/county-data">
             <ListItemIcon>
-              <MedicalServicesIcon />
+              <LocationCityIcon />
             </ListItemIcon>
-            <ListItemText primary="Cases" />
+            <ListItemText primary="County Data" />
           </ListItemButton>
-          <ListItemButton component="a" key="deaths" href="/deaths-by-state">
+          <ListItemButton component="a" key="deaths" href="/us-state-data">
             <ListItemIcon>
-              <LocalHospitalIcon />
+              <MapIcon />
             </ListItemIcon>
-            <ListItemText primary="Deaths" />
+            <ListItemText primary="State Data" />
           </ListItemButton>
         </List>
       </Drawer>

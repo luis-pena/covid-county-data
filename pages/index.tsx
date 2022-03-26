@@ -1,3 +1,3 @@
-import CasesByCounty from "./cases-by-county";
+import CasesByCounty from "./county-data";
 
 export default CasesByCounty;

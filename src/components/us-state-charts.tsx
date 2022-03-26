@@ -29,7 +29,7 @@ const dateOptions: Intl.DateTimeFormatOptions = {
   month: "long",
   day: "numeric",
 };
-const DeathsByState: FC<Props> = ({ state, data }) => {
+const USStateCharts: FC<Props> = ({ state, data }) => {
   const theme = useTheme();
 
   const formatTooltipLabelDate = (date: string) => {
@@ -88,4 +88,4 @@ const DeathsByState: FC<Props> = ({ state, data }) => {
   );
 };
 
-export default DeathsByState;
+export default USStateCharts;

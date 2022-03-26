@@ -15,7 +15,7 @@ import { useAppDispatch, useAppSelector } from "hooks/store";
 import { selectActiveCounties } from "slices/config";
 import SelectedCounties from "components/selected-counties";
 
-const Home = () => {
+const CountyData = () => {
   const dispatch = useAppDispatch();
   const hasFetchedCountyData = useAppSelector(selectHasFetchedCountyData);
   const countyData = useAppSelector(selectActiveCountyData);
@@ -42,7 +42,7 @@ const Home = () => {
   }, []);
 
   return (
-    <SingleColLayout title="COVID-19 Cases by County">
+    <SingleColLayout title="COVID-19 U.S. County Cases and Deaths">
       <SelectedCounties />
       <Paper sx={{ px: 2, py: 8 }}>
         <CountyCharts
@@ -56,4 +56,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default CountyData;

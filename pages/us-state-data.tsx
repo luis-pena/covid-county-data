@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 
 import Attribution from "components/attribution";
-import DeathsByState from "components/deaths-by-state";
+import USStateCharts from "components/us-state-charts";
 import SingleColLayout from "components/layout/single-col";
 import { Paper } from "@mui/material";
 
-const ByState = () => {
+const USStateData = () => {
   const [stateDeathsByDay, setStateDeathsByDay] = useState("");
   const [hasFectchedStateDeathsByDay, setHasFectchedStateDeathsByDay] =
     useState(false);
@@ -38,13 +38,13 @@ const ByState = () => {
   }, []);
 
   return (
-    <SingleColLayout title="COVID-19 Deaths by State">
+    <SingleColLayout title="COVID-19 U.S. State Cases and Deaths">
       <Paper sx={{ px: 2, py: 8 }}>
-        <DeathsByState state="California" data={stateDeathsByDay} />
+        <USStateCharts state="California" data={stateDeathsByDay} />
         <Attribution />
       </Paper>
     </SingleColLayout>
   );
 };
 
-export default ByState;
+export default USStateData;
