@@ -2,37 +2,37 @@ import { Skeleton, TextField, Autocomplete, Stack } from "@mui/material";
 import { useDispatch } from "react-redux";
 
 import { useAppSelector } from "hooks/store";
-import { selectAllCounties } from "slices/county-data";
-import { selectActiveCounties, setActiveCounties } from "slices/config";
+import { selectActiveUsStates, setActiveUsStates } from "slices/config";
+import { selectAllUsStates } from "slices/us-state-data";
 
-export default function SelectedCounties() {
-  const counties = useAppSelector(selectAllCounties);
-  const activeCounties = useAppSelector(selectActiveCounties);
+const UsStateFilter = () => {
+  const usStates = useAppSelector(selectAllUsStates);
+  const activeCounties = useAppSelector(selectActiveUsStates);
   const dispatch = useDispatch();
 
   const handleChange = (
     _params: React.SyntheticEvent,
     val: { title: string }[]
   ) => {
-    const newActiveCounties = val.map((countyObj) => countyObj.title);
-    dispatch(setActiveCounties(newActiveCounties));
+    const newActiveStates = val.map((countyObj) => countyObj.title);
+    dispatch(setActiveUsStates(newActiveStates));
   };
 
-  if (counties.length > 0) {
+  if (usStates.length > 0) {
     const defaultValue = activeCounties.map((county) => {
-      const i = counties.findIndex((countyObj) => countyObj.title === county);
-      return counties[i];
+      const i = usStates.findIndex((usStateObj) => usStateObj.title === county);
+      return usStates[i];
     });
     return (
       <Stack spacing={3} sx={{ width: 500, my: 2 }}>
         <Autocomplete
           multiple
           id="tags-outlined"
-          options={counties}
+          options={usStates}
           getOptionLabel={(option) => option?.title}
           defaultValue={defaultValue}
           filterSelectedOptions
-          renderInput={(params) => <TextField {...params} label="Counties" />}
+          renderInput={(params) => <TextField {...params} label="States" />}
           onChange={handleChange}
         />
       </Stack>
@@ -40,4 +40,6 @@ export default function SelectedCounties() {
   }
 
   return <Skeleton width={360} height={20} sx={{ my: 2 }} />;
-}
+};
+
+export default UsStateFilter;

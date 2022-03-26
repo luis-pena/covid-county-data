@@ -20,6 +20,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
 import ListItemButton from "@mui/material/ListItemButton";
+import Attribution from "components/attribution";
 
 const drawerWidth = 240;
 
@@ -157,9 +158,10 @@ const SingleColLayout: FunctionComponent<Props> = ({ children, title }) => {
           </ListItemButton>
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, py: 3, px: 8 }}>
+      <Box component="main" sx={{ flexGrow: 1, py: 3, px: 8, pb: 10 }}>
         <DrawerHeader />
         {children}
+        <Attribution />
       </Box>
     </Box>
   );

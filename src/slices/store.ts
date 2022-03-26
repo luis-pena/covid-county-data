@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import config from "slices/config";
 import countyData from "slices/county-data";
+import usStateData from "slices/us-state-data";
 
 export const store = configureStore({
   reducer: {
     config,
     countyData,
+    usStateData,
   },
 });
 
