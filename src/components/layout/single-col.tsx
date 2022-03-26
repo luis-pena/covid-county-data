@@ -99,7 +99,7 @@ const Drawer = styled(MuiDrawer, {
 
 const SingleColLayout: FunctionComponent<Props> = ({ children, title }) => {
   const theme = useTheme();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   const handleDrawerOpen = () => {
     setOpen(true);
