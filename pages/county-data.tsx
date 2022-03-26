@@ -1,9 +1,8 @@
+import { Paper, Typography, useTheme } from "@mui/material";
 import React, { useEffect } from "react";
 
-import Attribution from "components/attribution";
-import CountyCharts from "components/county-charts";
+import CountyChart from "components/county-chart";
 import SingleColLayout from "components/layout/single-col";
-import { Paper } from "@mui/material";
 import {
   selectActiveCountyData,
   selectDates,
@@ -16,6 +15,7 @@ import { selectActiveCounties } from "slices/config";
 import SelectedCounties from "components/selected-counties";
 
 const CountyData = () => {
+  const theme = useTheme();
   const dispatch = useAppDispatch();
   const hasFetchedCountyData = useAppSelector(selectHasFetchedCountyData);
   const countyData = useAppSelector(selectActiveCountyData);
@@ -44,13 +44,35 @@ const CountyData = () => {
   return (
     <SingleColLayout title="COVID-19 U.S. County Cases and Deaths">
       <SelectedCounties />
-      <Paper sx={{ px: 2, py: 8 }}>
-        <CountyCharts
+      <Paper sx={{ px: 2, py: 8, mb: 6 }}>
+        <Typography
+          variant="h5"
+          sx={{ pb: 4, ml: 2 }}
+          color={theme.palette.primary.dark}
+        >
+          New cases by day
+        </Typography>
+        <CountyChart
           activeCounties={activeCounties}
           dates={dates}
           countyData={countyData}
+          dataKey="cases"
         />
-        <Attribution />
+      </Paper>
+      <Paper sx={{ px: 2, py: 8 }}>
+        <Typography
+          variant="h5"
+          sx={{ pb: 4, ml: 2 }}
+          color={theme.palette.primary.dark}
+        >
+          New deaths by day
+        </Typography>
+        <CountyChart
+          activeCounties={activeCounties}
+          dates={dates}
+          countyData={countyData}
+          dataKey="deaths"
+        />
       </Paper>
     </SingleColLayout>
   );

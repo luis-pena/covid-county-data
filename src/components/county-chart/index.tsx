@@ -18,6 +18,7 @@ import {
 } from "recharts/types/component/DefaultTooltipContent";
 import { CountyTick } from "slices/county-data";
 import { Formatter } from "recharts/types/component/DefaultLegendContent";
+import { colorMap, formatTickDate, formatTooltipLabelDate } from "./helpers";
 
 type Props = {
   activeCounties: string[];
@@ -25,57 +26,27 @@ type Props = {
     [county: string]: CountyTick[];
   } | null;
   dates: { date: string }[];
-};
-
-const dateOptions: Intl.DateTimeFormatOptions = {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
+  dataKey: "cases" | "deaths";
 };
 
 type DateObj = {
   date: string;
 };
 
-const CountyCharts: FC<Props> = ({ activeCounties, countyData, dates }) => {
+const CountyChart: FC<Props> = ({
+  activeCounties,
+  countyData,
+  dates,
+  dataKey,
+}) => {
   const theme = useTheme();
-
-  const formatTooltipLabelDate = (date: string) => {
-    const dateConstruct = new Date(date);
-    return dateConstruct.toLocaleDateString(undefined, dateOptions);
-  };
-
-  const formatTickDate = (date: string) => {
-    const dateConstruct = new Date(date);
-    return dateConstruct.toLocaleDateString();
-  };
 
   const getLineDataForCounty = (dateObj: DateObj, county: string) => {
     if (countyData !== null) {
       const index = countyData[county].findIndex(
         (element: DateObj) => dateObj.date === element.date
       );
-      return countyData[county][index]?.cases;
-    }
-  };
-
-  const colorMap = (index: number) => {
-    switch (index) {
-      case 0:
-        return theme.palette.primary.light;
-      case 1:
-        return theme.palette.secondary.light;
-      case 2:
-        return theme.palette.warning.light;
-      case 3:
-        return theme.palette.success.light;
-      case 4:
-        return theme.palette.error.light;
-      case 5:
-        return theme.palette.info.light;
-
-      default:
-        return theme.palette.primary.light;
+      return countyData[county][index] && countyData[county][index][dataKey];
     }
   };
 
@@ -91,10 +62,13 @@ const CountyCharts: FC<Props> = ({ activeCounties, countyData, dates }) => {
             const index = countyData[county].findIndex(
               (element: DateObj) => date === element.date
             );
-            const cases = countyData[county][index]?.cases;
+            const datakey =
+              (countyData[county][index] &&
+                countyData[county][index][dataKey]) ||
+              "-";
             return (
               <Typography key={county} variant="subtitle1" color={colorMap(i)}>
-                {`${county}: ${cases?.toLocaleString()}`}
+                {`${county}: ${datakey?.toLocaleString()}`}
               </Typography>
             );
           })}
@@ -114,7 +88,7 @@ const CountyCharts: FC<Props> = ({ activeCounties, countyData, dates }) => {
       width="100%"
       minWidth={300}
       height="100%"
-      minHeight={600}
+      minHeight={450}
     >
       <LineChart data={dates}>
         <CartesianGrid strokeDasharray="3 3" />
@@ -146,4 +120,4 @@ const CountyCharts: FC<Props> = ({ activeCounties, countyData, dates }) => {
   );
 };
 
-export default CountyCharts;
+export default CountyChart;

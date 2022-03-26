@@ -66,7 +66,7 @@ export const countyDataSlice = createSlice({
             date: currentDate,
             cases: Math.max(newCasesForDay, 0),
             totalCasesToDate: currentTotalCases,
-            deaths: newDeaths,
+            deaths: Math.max(newDeaths, 0),
             totalDeathsToDate: currentTotalDeaths,
           });
         } else {

@@ -32,13 +32,7 @@ export default function SelectedCounties() {
           getOptionLabel={(option) => option?.title}
           defaultValue={defaultValue}
           filterSelectedOptions
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="U.S. Counties"
-              placeholder="U.S. Counties"
-            />
-          )}
+          renderInput={(params) => <TextField {...params} label="Counties" />}
           onChange={handleChange}
         />
       </Stack>

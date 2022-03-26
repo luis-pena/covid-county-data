@@ -99,7 +99,7 @@ const Drawer = styled(MuiDrawer, {
 
 const SingleColLayout: FunctionComponent<Props> = ({ children, title }) => {
   const theme = useTheme();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -157,7 +157,7 @@ const SingleColLayout: FunctionComponent<Props> = ({ children, title }) => {
           </ListItemButton>
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" sx={{ flexGrow: 1, py: 3, px: 8 }}>
         <DrawerHeader />
         {children}
       </Box>
