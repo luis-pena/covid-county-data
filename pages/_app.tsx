@@ -8,6 +8,7 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+import Head from "next/head";
 
 export default function MyApp({ Component }: { Component: FunctionComponent }) {
   const theme = useTheme();
@@ -19,10 +20,15 @@ export default function MyApp({ Component }: { Component: FunctionComponent }) {
     },
   });
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={customTheme}>
-        <Component />
-      </ThemeProvider>
-    </Provider>
+    <>
+      <Head>
+        <link rel="shortcut icon" href="/static/favicon.ico" />
+      </Head>
+      <Provider store={store}>
+        <ThemeProvider theme={customTheme}>
+          <Component />
+        </ThemeProvider>
+      </Provider>
+    </>
   );
 }
