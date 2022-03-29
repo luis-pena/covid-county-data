@@ -1,17 +1,20 @@
-import React, { useEffect } from "react";
-
-import UsStateChart from "components/us-state-chart";
-import SingleColLayout from "components/layout/single-col";
 import { Paper, Typography, useTheme } from "@mui/material";
+import React, { useEffect } from "react";
+import Head from "next/head";
+
+import SingleColLayout from "components/layout/single-col";
+import UsStateChart from "components/us-state-chart";
+import UsStateFilter from "components/us-state-filter";
+
+import { useAppDispatch, useAppSelector } from "hooks/store";
+
+import { selectActiveUsStates } from "slices/config";
 import {
   selectActiveUsStateData,
   selectDates,
   selectHasFetchedUsStateData,
   setUsStateData,
 } from "slices/us-state-data";
-import UsStateFilter from "components/us-state-filter";
-import { selectActiveUsStates } from "slices/config";
-import { useAppDispatch, useAppSelector } from "hooks/store";
 
 const USStateData = () => {
   const theme = useTheme();
@@ -41,7 +44,10 @@ const USStateData = () => {
   }, []);
 
   return (
-    <SingleColLayout title="COVID-19 U.S. State Cases and Deaths">
+    <SingleColLayout title="COVID-19 US State Cases and Deaths">
+      <Head>
+        <title>COVID-19 US State Cases and Deaths</title>
+      </Head>
       <UsStateFilter />
       <Paper sx={{ px: 2, py: 4, mb: 6 }}>
         <Typography

@@ -1,8 +1,12 @@
 import { Paper, Typography, useTheme } from "@mui/material";
+import Head from "next/head";
 import React, { useEffect } from "react";
 
 import CountyChart from "components/county-chart";
+import CountyFilter from "components/county-filter";
 import SingleColLayout from "components/layout/single-col";
+
+import { selectActiveCounties } from "slices/config";
 import {
   selectActiveCountyData,
   selectDates,
@@ -11,8 +15,6 @@ import {
 } from "slices/county-data";
 
 import { useAppDispatch, useAppSelector } from "hooks/store";
-import { selectActiveCounties } from "slices/config";
-import CountyFilter from "components/county-filter";
 
 const CountyData = () => {
   const theme = useTheme();
@@ -42,7 +44,10 @@ const CountyData = () => {
   }, []);
 
   return (
-    <SingleColLayout title="COVID-19 U.S. County Cases and Deaths">
+    <SingleColLayout title="COVID-19 US County Cases and Deaths">
+      <Head>
+        <title>COVID-19 US County Cases and Deaths</title>
+      </Head>
       <CountyFilter />
       <Paper sx={{ px: 2, py: 4, mb: 6 }}>
         <Typography
