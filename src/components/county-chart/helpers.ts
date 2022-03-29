@@ -1,14 +1,22 @@
 import { useTheme } from "@mui/material";
 
-const dateOptions: Intl.DateTimeFormatOptions = {
+const tooltipDateOptions: Intl.DateTimeFormatOptions = {
   year: "numeric",
   month: "long",
   day: "numeric",
+  timeZone: "UTC",
+};
+
+const tickDateOptions: Intl.DateTimeFormatOptions = {
+  year: "numeric",
+  month: "numeric",
+  day: "numeric",
+  timeZone: "UTC",
 };
 
 export const formatTooltipLabelDate = (date: string) => {
   const dateConstruct = new Date(date);
-  return dateConstruct.toLocaleDateString(undefined, dateOptions);
+  return dateConstruct.toLocaleDateString(undefined, tooltipDateOptions);
 };
 
 export const colorMap = (index: number) => {
@@ -35,7 +43,10 @@ export const colorMap = (index: number) => {
 export const formatTickDate = (date: string) => {
   if (date) {
     const dateConstruct = new Date(date);
-    const formattedDate = dateConstruct.toLocaleDateString();
+    const formattedDate = dateConstruct.toLocaleDateString(
+      undefined,
+      tickDateOptions
+    );
     return formattedDate === "Invalid Date" ? "-" : formattedDate;
   }
   return "-";

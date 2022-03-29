@@ -41,8 +41,8 @@ export const countyDataSlice = createSlice({
         // 1: COUNTY   | "Park"
         // 2: US STATE | "Wyoming"
         // 3: FIPS     | "56029"
-        // 4: cases    | "6732"
-        // 5: deaths   | "136"
+        // 4: CASES    | "6732"
+        // 5: DEATHS   | "136"
 
         const currentDate = currentRow[0];
         if (!datesDictionary[currentDate]) {
