@@ -1,4 +1,7 @@
-# Setup
+# See it live
+https://covid.luispena.org/
+
+# Local Setup
 
 Install dependencies
 ```bash
