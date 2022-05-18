@@ -6,7 +6,7 @@ import CountyChart from "components/county-chart";
 import CountyFilter from "components/county-filter";
 import SingleColLayout from "components/layout/single-col";
 
-import { selectActiveCounties } from "slices/config";
+import { selectActiveCounties, setActiveCounties } from "slices/config";
 import {
   selectActiveCountyData,
   selectDates,
@@ -34,6 +34,12 @@ const CountyData = () => {
             .then((response) => response.text())
             .then((data) => {
               dispatch(setCountyData(data));
+              dispatch(
+                setActiveCounties([
+                  "Los Angeles, California",
+                  "San Diego, California",
+                ])
+              );
             });
         } catch (e) {
           console.log("ERROR", e);

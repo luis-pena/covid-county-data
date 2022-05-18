@@ -9,8 +9,8 @@ interface ConfigState {
 
 // Define the initial state using that type
 const initialState: ConfigState = {
-  counties: ["Los Angeles, California", "San Diego, California"],
-  usStates: ["California", "New York"],
+  counties: [],
+  usStates: [],
 };
 
 export const configSlice = createSlice({

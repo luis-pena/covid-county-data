@@ -8,7 +8,7 @@ import UsStateFilter from "components/us-state-filter";
 
 import { useAppDispatch, useAppSelector } from "hooks/store";
 
-import { selectActiveUsStates } from "slices/config";
+import { selectActiveUsStates, setActiveUsStates } from "slices/config";
 import {
   selectActiveUsStateData,
   selectDates,
@@ -34,6 +34,7 @@ const USStateData = () => {
             .then((response) => response.text())
             .then((data) => {
               dispatch(setUsStateData(data));
+              dispatch(setActiveUsStates(["California", "New York"]));
             });
         } catch (e) {
           console.log("ERROR", e);

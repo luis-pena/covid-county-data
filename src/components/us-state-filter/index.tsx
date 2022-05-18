@@ -4,11 +4,19 @@ import { useDispatch } from "react-redux";
 import { useAppSelector } from "hooks/store";
 import { selectActiveUsStates, setActiveUsStates } from "slices/config";
 import { selectAllUsStates } from "slices/us-state-data";
+import { useEffect, useState } from "react";
 
 const UsStateFilter = () => {
-  const usStates = useAppSelector(selectAllUsStates);
-  const activeCounties = useAppSelector(selectActiveUsStates);
   const dispatch = useDispatch();
+  const activeUsStates = useAppSelector(selectActiveUsStates);
+  const usStates = useAppSelector(selectAllUsStates);
+  const [hasSetUsState, setHasSetUsState] = useState(false);
+
+  useEffect(() => {
+    if (activeUsStates.length > 0 && !hasSetUsState) {
+      setHasSetUsState(true);
+    }
+  }, [activeUsStates]);
 
   const handleChange = (
     _params: React.SyntheticEvent,
@@ -18,9 +26,11 @@ const UsStateFilter = () => {
     dispatch(setActiveUsStates(newActiveStates));
   };
 
-  if (usStates.length > 0) {
-    const defaultValue = activeCounties.map((county) => {
-      const i = usStates.findIndex((usStateObj) => usStateObj.title === county);
+  if (hasSetUsState || (usStates.length > 0 && activeUsStates.length > 0)) {
+    const defaultValue = activeUsStates.map((usState) => {
+      const i = usStates.findIndex(
+        (usStateObj) => usStateObj.title === usState
+      );
       return usStates[i];
     });
     return (

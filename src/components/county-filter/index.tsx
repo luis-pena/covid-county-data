@@ -4,11 +4,19 @@ import { useDispatch } from "react-redux";
 import { useAppSelector } from "hooks/store";
 import { selectAllCounties } from "slices/county-data";
 import { selectActiveCounties, setActiveCounties } from "slices/config";
+import { useEffect, useState } from "react";
 
 const CountyFilter = () => {
+  const [hasSetCounties, setHasSetCounties] = useState(false);
   const counties = useAppSelector(selectAllCounties);
   const activeCounties = useAppSelector(selectActiveCounties);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (activeCounties.length > 0 && !hasSetCounties) {
+      setHasSetCounties(true);
+    }
+  }, [activeCounties]);
 
   const handleChange = (
     _params: React.SyntheticEvent,
@@ -18,7 +26,7 @@ const CountyFilter = () => {
     dispatch(setActiveCounties(newActiveCounties));
   };
 
-  if (counties.length > 0) {
+  if (hasSetCounties || (counties.length > 0 && activeCounties.length > 0)) {
     const defaultValue = activeCounties.map((county) => {
       const i = counties.findIndex((countyObj) => countyObj.title === county);
       return counties[i];
