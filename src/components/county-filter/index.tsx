@@ -7,10 +7,10 @@ import { selectActiveCounties, setActiveCounties } from "slices/config";
 import { useEffect, useState } from "react";
 
 const CountyFilter = () => {
-  const [hasSetCounties, setHasSetCounties] = useState(false);
-  const counties = useAppSelector(selectAllCounties);
-  const activeCounties = useAppSelector(selectActiveCounties);
   const dispatch = useDispatch();
+  const activeCounties = useAppSelector(selectActiveCounties);
+  const counties = useAppSelector(selectAllCounties);
+  const [hasSetCounties, setHasSetCounties] = useState(false);
 
   useEffect(() => {
     if (activeCounties.length > 0 && !hasSetCounties) {
