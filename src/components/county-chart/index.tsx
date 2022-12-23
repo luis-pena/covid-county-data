@@ -16,17 +16,17 @@ import {
   NameType,
   ValueType,
 } from "recharts/types/component/DefaultTooltipContent";
-import { CountyTick } from "slices/county-data";
+import { County, CountyTick } from "slices/county-data";
 import { Formatter } from "recharts/types/component/DefaultLegendContent";
 import { colorMap, formatTickDate, formatTooltipLabelDate } from "./helpers";
 
 type Props = {
-  activeCounties: string[];
+  activeCounties: County[];
   countyData: {
     [county: string]: CountyTick[];
   } | null;
   dates: { date: string }[];
-  dataKey: "cases" | "deaths";
+  dataKey: "newCases" | "newDeaths";
 };
 
 type DateObj = {
@@ -36,39 +36,47 @@ type DateObj = {
 const CountyChart: FC<Props> = ({
   activeCounties,
   countyData,
-  dates,
   dataKey,
+  dates,
 }) => {
   const theme = useTheme();
 
-  const getLineDataForCounty = (dateObj: DateObj, county: string) => {
-    if (countyData !== null) {
-      const index = countyData[county].findIndex(
+  const getLineDataForCounty = (dateObj: DateObj, fips: string) => {
+    if (countyData && countyData[fips]) {
+      const index = countyData[fips].findIndex(
         (element: DateObj) => dateObj.date === element.date
       );
-      return countyData[county][index] && countyData[county][index][dataKey];
+      if (countyData[fips][index] && countyData[fips][index][dataKey]) {
+        return countyData[fips][index][dataKey];
+      }
     }
+    return null;
   };
 
   const renderTooltip: ContentType<ValueType, NameType> = ({ payload }) => {
     const { date } = (payload && payload[0]?.payload) || { date: null };
-    if (date && countyData !== null) {
+    if (date && countyData) {
       return (
         <Paper sx={{ px: 1.5, py: 1 }}>
           <Typography variant="overline" color="text.secondary">
             {payload && formatTooltipLabelDate(date)}
           </Typography>
           {activeCounties.map((county, i) => {
-            const index = countyData[county].findIndex(
+            const index = countyData[county.fips]?.findIndex(
               (element: DateObj) => date === element.date
             );
             const datakey =
-              (countyData[county][index] &&
-                countyData[county][index][dataKey]) ||
-              "-";
+              (countyData[county.fips] &&
+                countyData[county.fips][index] &&
+                countyData[county.fips][index][dataKey]) ||
+              0;
             return (
-              <Typography key={county} variant="subtitle1" color={colorMap(i)}>
-                {`${county}: ${datakey?.toLocaleString()}`}
+              <Typography
+                key={county.fips}
+                variant="subtitle1"
+                color={colorMap(i)}
+              >
+                {`${county.county}: ${datakey?.toLocaleString()}`}
               </Typography>
             );
           })}
@@ -80,7 +88,7 @@ const CountyChart: FC<Props> = ({
   };
 
   const formatLegend: Formatter = (_value, _entry, index) => {
-    return activeCounties[index];
+    return activeCounties[index].county;
   };
 
   return (
@@ -106,12 +114,13 @@ const CountyChart: FC<Props> = ({
         {activeCounties.map((county, index) => (
           <Line
             isAnimationActive={countyData !== null}
-            key={county}
+            key={county.fips}
             dot={false}
             type="monotone"
-            dataKey={(data) => getLineDataForCounty(data, county)}
+            dataKey={(data) => getLineDataForCounty(data, county.fips)}
             stroke={colorMap(index)}
             activeDot={{ r: 5 }}
+            connectNulls
           />
         ))}
         <Legend formatter={formatLegend} />
