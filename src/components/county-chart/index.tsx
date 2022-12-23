@@ -1,7 +1,6 @@
 import { CSSProperties, FC } from "react";
 
 import {
-  Area,
   CartesianGrid,
   Legend,
   Line,
