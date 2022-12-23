@@ -4,19 +4,11 @@ import { useDispatch } from "react-redux";
 import { useAppSelector } from "hooks/store";
 import { selectActiveUsStates, setActiveUsStates } from "slices/config";
 import { selectAllUsStates } from "slices/us-state-data";
-import { useEffect, useState } from "react";
 
 const UsStateFilter = () => {
   const dispatch = useDispatch();
   const activeUsStates = useAppSelector(selectActiveUsStates);
   const usStates = useAppSelector(selectAllUsStates);
-  const [hasSetUsState, setHasSetUsState] = useState(false);
-
-  useEffect(() => {
-    if (activeUsStates.length > 0 && !hasSetUsState) {
-      setHasSetUsState(true);
-    }
-  }, [activeUsStates]);
 
   const handleChange = (
     _params: React.SyntheticEvent,
@@ -26,13 +18,7 @@ const UsStateFilter = () => {
     dispatch(setActiveUsStates(newActiveStates));
   };
 
-  if (hasSetUsState || (usStates.length > 0 && activeUsStates.length > 0)) {
-    const defaultValue = activeUsStates.map((usState) => {
-      const i = usStates.findIndex(
-        (usStateObj) => usStateObj.title === usState
-      );
-      return usStates[i];
-    });
+  if (usStates.length > 0) {
     return (
       <Stack spacing={3} sx={{ width: 500, my: 2 }}>
         <Autocomplete
@@ -40,10 +26,12 @@ const UsStateFilter = () => {
           id="tags-outlined"
           options={usStates}
           getOptionLabel={(option) => option?.title}
-          defaultValue={defaultValue}
           filterSelectedOptions
           renderInput={(params) => <TextField {...params} label="States" />}
           onChange={handleChange}
+          value={usStates.filter((usState) =>
+            activeUsStates.includes(usState.title)
+          )}
         />
       </Stack>
     );

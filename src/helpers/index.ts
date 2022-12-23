@@ -1,5 +1,8 @@
+import { DATE_FORMAT } from "constants/index";
+import moment from "moment";
+
 /**
- * Assumes startDate is before endDate
+ * startDate should be in the past relative to endDate
  * @param startDate - date in string as 'YYYY-MM-DD'
  * @param endDate - date in string as 'YYYY-MM-DD'
  * @returns an array of dates represented in a string
@@ -9,8 +12,10 @@ export const createDateRangeArray = (
   endDate: string
 ): { date: string }[] => {
   const dates = [];
-  const diffTime = Math.abs(new Date(endDate) - new Date(startDate));
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  const diffDays = Math.abs(
+    moment(startDate, DATE_FORMAT).diff(moment(endDate, DATE_FORMAT), "days")
+  );
+
   for (let i = diffDays; i > 0; i--) {
     const runningDate = new Date(endDate);
     runningDate.setDate(runningDate.getDate() - i);

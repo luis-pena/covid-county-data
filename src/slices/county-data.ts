@@ -30,8 +30,11 @@ export const countyDataSlice = createSlice({
   name: "countyData",
   initialState,
   reducers: {
-    setCountyData: (state, action: PayloadAction<[]>) => {
-      const dataDictionary = {};
+    setCountyData: (
+      state,
+      action: PayloadAction<{ data: CountyTick[]; fips: string }[]>
+    ) => {
+      const dataDictionary: { [fips: string]: CountyTick[] } = {};
       action.payload.forEach((countyObj) => {
         dataDictionary[countyObj.fips] = countyObj.data;
       });
