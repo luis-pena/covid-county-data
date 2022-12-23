@@ -25,7 +25,6 @@ const CountyFilter = () => {
           getOptionLabel={(countyObj: County) =>
             `${countyObj?.county.substring(0, countyObj?.county.length - 7)}`
           }
-          defaultValue={activeCounties}
           isOptionEqualToValue={(option, value) => option.fips === value.fips}
           filterSelectedOptions
           size="small"

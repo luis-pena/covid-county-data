@@ -20,13 +20,14 @@ const UsStateFilter = () => {
 
   if (usStates.length > 0) {
     return (
-      <Stack spacing={3} sx={{ width: 500, my: 2 }}>
+      <Stack spacing={3} sx={{ minWidth: 320 }}>
         <Autocomplete
           multiple
           id="tags-outlined"
           options={usStates}
           getOptionLabel={(option) => option?.title}
           filterSelectedOptions
+          size="small"
           renderInput={(params) => <TextField {...params} label="States" />}
           onChange={handleChange}
           value={usStates.filter((usState) =>

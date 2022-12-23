@@ -1,6 +1,7 @@
 import { CSSProperties, FC } from "react";
 
 import {
+  Area,
   CartesianGrid,
   Legend,
   Line,
@@ -119,6 +120,7 @@ const CountyChart: FC<Props> = ({
             type="monotone"
             dataKey={(data) => getLineDataForCounty(data, county.fips)}
             stroke={colorMap(index)}
+            strokeWidth={2}
             activeDot={{ r: 5 }}
             connectNulls
           />

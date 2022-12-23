@@ -23,9 +23,9 @@ export const colorMap = (index: number) => {
   const theme = useTheme();
   switch (index) {
     case 0:
-      return theme.palette.secondary.light;
-    case 1:
       return theme.palette.primary.light;
+    case 1:
+      return theme.palette.secondary.light;
     case 2:
       return theme.palette.warning.light;
     case 3:
