@@ -36,6 +36,7 @@ const CountyData = () => {
   const activeCounties = useAppSelector(selectActiveCounties);
   const [hasFetchedCounties, setHasFecthedCounties] = useState(false);
 
+  // FETCH COUNTIES
   useEffect(() => {
     async function fetchCountyCasesByDay() {
       if (!hasFetchedCounties) {
@@ -54,6 +55,7 @@ const CountyData = () => {
     fetchCountyCasesByDay();
   }, []);
 
+  // FETCH COUNTY TIMESERIES DATA
   useEffect(() => {
     async function fetchCountyDataByFips() {
       const fipsArr = activeCounties.map((county) => county.fips);

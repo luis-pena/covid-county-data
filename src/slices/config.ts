@@ -15,7 +15,7 @@ interface ConfigState {
 // Define the initial state using that type
 const initialState: ConfigState = {
   counties: [{ fips: "06037", state: "CA", county: "Los Angeles County" }],
-  usStates: ["California", "New York"],
+  usStates: ["CA", "NY"],
   startDate: moment().subtract(60, "days").format(DATE_FORMAT),
   endDate: moment().format(DATE_FORMAT),
 };
