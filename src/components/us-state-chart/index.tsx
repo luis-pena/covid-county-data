@@ -19,6 +19,7 @@ import {
 import { UsStateTick } from "slices/us-state-data";
 import { Formatter } from "recharts/types/component/DefaultLegendContent";
 import { colorMap, formatTickDate, formatTooltipLabelDate } from "./helpers";
+import { US_STATES } from "constants/index";
 
 type Props = {
   activeUsStates: string[];
@@ -26,7 +27,7 @@ type Props = {
     [usState: string]: UsStateTick[];
   } | null;
   dates: { date: string }[];
-  dataKey: "cases" | "deaths";
+  dataKey: "newCases" | "newDeaths";
 };
 
 type DateObj = {
@@ -42,7 +43,7 @@ const UsStateChart: FC<Props> = ({
   const theme = useTheme();
 
   const getLineDataForUsState = (dateObj: DateObj, usState: string) => {
-    if (usStateData !== null) {
+    if (usStateData !== null && usStateData[usState]) {
       const index = usStateData[usState].findIndex(
         (element: DateObj) => dateObj.date === element.date
       );
@@ -54,23 +55,26 @@ const UsStateChart: FC<Props> = ({
 
   const renderTooltip: ContentType<ValueType, NameType> = ({ payload }) => {
     const { date } = (payload && payload[0]?.payload) || { date: null };
-    if (date && usStateData !== null) {
+    if (date && usStateData) {
       return (
         <Paper sx={{ px: 1.5, py: 1 }}>
           <Typography variant="overline" color="text.secondary">
             {payload && formatTooltipLabelDate(date)}
           </Typography>
           {activeUsStates.map((usState, i) => {
-            const index = usStateData[usState].findIndex(
+            const index = usStateData[usState]?.findIndex(
               (element: DateObj) => date === element.date
             );
             const datakey =
-              (usStateData[usState][index] &&
+              (usStateData[usState] &&
+                usStateData[usState][index] &&
                 usStateData[usState][index][dataKey]) ||
               "-";
             return (
               <Typography key={usState} variant="subtitle1" color={colorMap(i)}>
-                {`${usState}: ${datakey?.toLocaleString()}`}
+                {`${
+                  US_STATES[usState as keyof typeof US_STATES]
+                }: ${datakey?.toLocaleString()}`}
               </Typography>
             );
           })}
@@ -82,7 +86,7 @@ const UsStateChart: FC<Props> = ({
   };
 
   const formatLegend: Formatter = (_value, _entry, index) => {
-    return activeUsStates[index];
+    return US_STATES[activeUsStates[index] as keyof typeof US_STATES];
   };
 
   return (
@@ -113,7 +117,9 @@ const UsStateChart: FC<Props> = ({
             type="monotone"
             dataKey={(data) => getLineDataForUsState(data, usState)}
             stroke={colorMap(index)}
+            strokeWidth={2}
             activeDot={{ r: 5 }}
+            connectNulls
           />
         ))}
         <Legend formatter={formatLegend} />

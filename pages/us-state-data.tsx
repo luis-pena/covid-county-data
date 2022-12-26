@@ -1,5 +1,5 @@
-import { Paper, Typography, useTheme } from "@mui/material";
-import React, { useEffect } from "react";
+import { Paper, Stack, Typography, useTheme } from "@mui/material";
+import React, { useEffect, useMemo } from "react";
 import Head from "next/head";
 
 import SingleColLayout from "components/layout/single-col";
@@ -8,47 +8,62 @@ import UsStateFilter from "components/us-state-filter";
 
 import { useAppDispatch, useAppSelector } from "hooks/store";
 
-import { selectActiveUsStates } from "slices/config";
 import {
-  selectActiveUsStateData,
-  selectDates,
-  selectHasFetchedUsStateData,
-  setUsStateData,
-} from "slices/us-state-data";
+  selectActiveUsStates,
+  selectEndDate,
+  selectStartDate,
+} from "slices/config";
+import { selectActiveUsStateData, setUsStateData } from "slices/us-state-data";
+import DatePicker from "components/date-picker";
+import { createDateRangeArray } from "helpers";
 
 const USStateData = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
-  const hasFetchedUsStateData = useAppSelector(selectHasFetchedUsStateData);
   const usStateData = useAppSelector(selectActiveUsStateData);
-  const dates = useAppSelector(selectDates);
+  const startDate = useAppSelector(selectStartDate);
+  const endDate = useAppSelector(selectEndDate);
   const activeUsStates = useAppSelector(selectActiveUsStates);
 
+  const dates = useMemo(
+    () => createDateRangeArray(startDate, endDate),
+    [startDate, endDate]
+  );
+
+  // FETCH STATE TIMESERIES DATA
   useEffect(() => {
-    async function fetchStateDeathsByDay() {
-      if (!hasFetchedUsStateData) {
-        try {
-          await fetch(
-            "https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv"
-          )
-            .then((response) => response.text())
-            .then((data) => {
-              dispatch(setUsStateData(data));
-            });
-        } catch (e) {
-          console.log("ERROR", e);
-        }
-      }
+    async function fetchStateData() {
+      await fetch("api/us-state-data", {
+        headers: { states: activeUsStates.toString() },
+      }).then((res) =>
+        res.json().then((data) => {
+          console.log("SETTING", data);
+
+          dispatch(setUsStateData(data));
+        })
+      );
     }
-    fetchStateDeathsByDay();
-  }, []);
+    fetchStateData();
+  }, [activeUsStates]);
 
   return (
     <SingleColLayout title="COVID-19 US State Cases and Deaths">
       <Head>
         <title>COVID-19 US State Cases and Deaths</title>
       </Head>
-      <UsStateFilter />
+      <Stack
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "flex-start",
+          justifyContent: "space-between",
+          mb: 3,
+          gap: 2,
+        }}
+      >
+        <UsStateFilter />
+        <DatePicker />
+      </Stack>
       <Paper sx={{ px: 2, py: 4, mb: 6 }}>
         <Typography
           variant="h5"
@@ -61,7 +76,7 @@ const USStateData = () => {
           activeUsStates={activeUsStates}
           dates={dates}
           usStateData={usStateData}
-          dataKey="cases"
+          dataKey="newCases"
         />
       </Paper>
       <Paper sx={{ px: 2, py: 8 }}>
@@ -76,7 +91,7 @@ const USStateData = () => {
           activeUsStates={activeUsStates}
           dates={dates}
           usStateData={usStateData}
-          dataKey="deaths"
+          dataKey="newDeaths"
         />
       </Paper>
     </SingleColLayout>
