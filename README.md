@@ -4,7 +4,7 @@ https://covid.luispena.org/
 # Local Setup
 
 Acquire API Key
-Visit `https://covidactnow.org/data-api` and register for a free API key
+Visit https://covidactnow.org/data-api and register for a free API key
 
 Create an .env.local file in your project's root directory with your API key
 ```
