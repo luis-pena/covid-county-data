@@ -37,8 +37,6 @@ const USStateData = () => {
         headers: { states: activeUsStates.toString() },
       }).then((res) =>
         res.json().then((data) => {
-          console.log("SETTING", data);
-
           dispatch(setUsStateData(data));
         })
       );
