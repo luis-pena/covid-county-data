@@ -16,8 +16,8 @@ interface ConfigState {
 const initialState: ConfigState = {
   counties: [{ fips: "06037", state: "CA", county: "Los Angeles County" }],
   usStates: ["CA", "NY"],
-  startDate: moment().subtract(60, "days").format(DATE_FORMAT),
-  endDate: moment().format(DATE_FORMAT),
+  startDate: moment("2020-03-05", DATE_FORMAT).format(DATE_FORMAT),
+  endDate: moment("2020-05-04", DATE_FORMAT).format(DATE_FORMAT),
 };
 
 export const configSlice = createSlice({
